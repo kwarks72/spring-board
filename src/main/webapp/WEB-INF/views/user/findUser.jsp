@@ -11,7 +11,7 @@
 
 <div class="container mt-5" style="max-width: 500px;">
     <div class="card p-4 shadow-sm">
-        <h2 class="mb-4 text-center fw-bold">이메일로 유저 찾기</h2>
+        <h2 class="mb-4 text-center fw-bold">이메일로 유저 찾기!</h2>
 
         <!-- TODO 6. form action 주소와 method 를 작성하시오 -->
         <!-- 조건 : action = /user/find / method = 데이터 전송 방식 -->
