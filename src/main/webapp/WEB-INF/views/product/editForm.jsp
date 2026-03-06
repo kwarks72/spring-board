@@ -1,5 +1,5 @@
-<%-- TODO 11. header.jsp 를 include 하시오 --%>
-???
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8" %>
+<%@ include file="../common/header.jsp" %>
 
 <div class="container mt-5" style="max-width: 500px;">
     <div class="card p-4 shadow-sm">
@@ -26,5 +26,4 @@
     </div>
 </div>
 
-<%-- TODO 12. footer.jsp 를 include 하시오 --%>
-???
+<%@ include file="../common/footer.jsp" %>

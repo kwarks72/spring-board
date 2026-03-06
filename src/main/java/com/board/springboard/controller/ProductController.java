@@ -29,7 +29,7 @@ public class ProductController {
         List<Product> productsData = productService.전체제품목록();
         //                            ""jsp에서 사용할 변수이름    products sql에서 가져온 데이터
         model.addAttribute("products", productsData);
-        return "product/list"; // webapp/WEB-INF/views/product/list.jsp
+        return "product/product_list"; // webapp/WEB-INF/views/product/product_list.jsp
     }
 
     /**

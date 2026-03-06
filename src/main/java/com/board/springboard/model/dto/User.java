@@ -32,5 +32,6 @@ public class User {
     private String name;
     private String email;
     private LocalDateTime create_at;
+    private String profile_img;
 
 }

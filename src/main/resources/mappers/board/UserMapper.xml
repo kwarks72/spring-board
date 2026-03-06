@@ -34,4 +34,25 @@
         WHERE email = #{email}
     </select>
 
+        <update id="프로필사진수정" parameterType="com.board.springboard.model.dto.User">
+            update users set profile_img=#{profile_img}
+            where id= #{id}
+        </update>
+
+
+    <select id="유저단건조회" parameterType="int" resultType="com.board.springboard.model.dto.User">
+        SELECT *
+        FROM users
+        WHERE id= #{id}
+    </select>
+
+
+    <!-- TODO 1: id, parameterType, SET 절, WHERE 절을 채우세요 -->
+    <update id="유저정보수정" parameterType="com.board.springboard.model.dto.User">
+        UPDATE users
+        SET name  = #{name},
+            email = #{email}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

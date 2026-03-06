@@ -1,5 +1,14 @@
-<%-- TODO 7. header.jsp 를 include 하시오 --%>
-???
+<%--
+product/list.jsp -> product/product_list.jsp 교체
+
+절대경로 상대경로 차이
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+
+<%@ include file="../common/header.jsp" %>
+--%>
+
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8" %>
+<%@ include file="../common/header.jsp" %>
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -36,5 +45,4 @@
     </table>
 </div>
 
-<%-- TODO 8. footer.jsp 를 include 하시오 --%>
-???
+<%@ include file="../common/footer.jsp" %>
