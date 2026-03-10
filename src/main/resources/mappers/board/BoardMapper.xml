@@ -30,11 +30,18 @@
         WHERE board_no = #{board_no}
     </select>
 
-    <!-- 게시물 추가 -->
-    <insert id="게시물추가" parameterType="com.board.springboard.model.dto.Board">
-        INSERT INTO board (title, content, writer, created_at, view_count)
-        VALUES (#{title}, #{content}, #{writer}, NOW(), 0)
+    <!-- 게시물 추가
+    useGeneratedKeys: mysql 존재하는 속성 db가 자동 생성한 primarykey를 java객체에 넣어줌
+    keyproperty board.java의 board_no필드에 자동생성된 primary key세팅
+    이 설정이 있어야 boardservice.java에서 board.getBoard_no()로 방금 저장된 번호를 실시간으로 꺼낼 수 있다-->
+    <insert id="게시물추가" parameterType="com.board.springboard.model.dto.Board"
+    useGeneratedKeys="true" keyProperty="board_no">
+
+INSERT INTO board (title, content, writer, created_at, view_count, attach_img)
+        VALUES (#{title}, #{content}, #{writer}, NOW(), 0, #{attach_imag})
     </insert>
+
+
 
     <!-- 게시물 수정 -->
     <update id="게시물수정" parameterType="com.board.springboard.model.dto.Board">
@@ -54,4 +61,8 @@
         SET view_count = view_count + 1
         WHERE board_no = #{board_no}
     </update>
+
+
+
+
 </mapper>

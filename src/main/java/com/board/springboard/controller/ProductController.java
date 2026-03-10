@@ -1,5 +1,4 @@
 package com.board.springboard.controller;
-
 import com.board.springboard.model.dto.Product;
 import com.board.springboard.model.service.ProductService;
 import lombok.RequiredArgsConstructor;
