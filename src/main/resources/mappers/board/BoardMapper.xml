@@ -38,7 +38,7 @@
     useGeneratedKeys="true" keyProperty="board_no">
 
 INSERT INTO board (title, content, writer, created_at, view_count, attach_img)
-        VALUES (#{title}, #{content}, #{writer}, NOW(), 0, #{attach_imag})
+        VALUES (#{title}, #{content}, #{writer}, NOW(), 0, #{attach_img})
     </insert>
 
 
