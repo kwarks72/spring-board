@@ -11,7 +11,7 @@
 <body class="bg-light">
 <div class="container mt-5" style="max-width: 100%">
     <div class="fw-bold mb-4">게시물 수정</div>
-    <form action="/board/edit" method="post">
+    <form action=> <!--board/edit을 수정하기 전-->
         <input type="hidden" name="board_no" value="${board.board_no}">
 
         <div class="mb-3">
