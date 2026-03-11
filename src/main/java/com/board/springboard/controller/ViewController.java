@@ -198,7 +198,9 @@ public class ViewController {
      * 새로운 페이지를 처음부터 다시 호출하게 만들 때 사용
      * -> 저장하고,삭제할 일 다했으니 지금  페이지에 있지마시고 ㅇㅇㅇ 페이지로 이동하세요.
      */
-    @GetMapping("/board/delete")
+    @PostMapping("/board/delete")
+
+
     public String deleteBoard(@RequestParam("no") int board_no) {
         boardService.deleteBoard(board_no);
         return "redirect:/board/list";
