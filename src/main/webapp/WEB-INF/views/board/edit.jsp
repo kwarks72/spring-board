@@ -27,10 +27,33 @@
 
         <div class="text-end">
             <a href="/board/detail?no=${board.board_no}" class="btn btn-outline-secondary">취소</a>
-            <button class="btn btn-warning">수정완료</button>
+            <button type="button" class="btn btn-warning" onclick="수정완료버튼기능()">수정완료</button>
         </div>
     </form>
 </div>
+<script>
+    function 수정완료버튼기능(){
+        const 백엔드로_전달할_데이터들={
+            board_no: document.getElementById("board_no").value,
+            title: document.getElementById("title").value,
+            content: document.getElementById("content").value
 
+        };
+        fetch("/board/edit"){
+            method:'put';
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(백엔드로_전달할_데이터들)
+        })
+        .then(res=>res.json())
+            .then(결과=> {
+                location.href="/board/detail?no="+결과.board_no
+            })
+            .catch(err=>console.log("백엔드 전송 실패했다면 왜 실패했나요:",err));
+
+    }
+
+
+
+</script>
 </body>
 </html>
