@@ -7,9 +7,7 @@ import com.board.springboard.model.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -37,12 +35,12 @@ api 주소들의 모음
 ❌아직 안합니다. @RestController ❌ -> DB에서 가져온 데이터를 Json 형태로 화면에서 보여주는 것
  */
 
-
 @Controller // jsp 나 html 템플릿과 소비자가 연결해야하는 api 주소 작성
 @RequiredArgsConstructor // 이 한줄이 생성자 코드를 자동 생성해준다.
 public class ViewController {
     private final BoardService boardService;
     private final BoardImageMapper boardImageMapper;
+
     /*
     아래 생성자 매개변수 코드를 @RequiredArgsConstructor 어노테이션으로
     대체하여 사용할 수 있다.
@@ -81,6 +79,8 @@ public class ViewController {
         // 가져온 데이터를 board 폴더 내에 있는 detail 전달
         Board boardData = boardService.boardDetail(board_no);
         model.addAttribute("board", boardData);
+
+        // service 에서 컨트롤러로 가져와야한다.
         List<BoardImage> 이미지들데이터 = boardImageMapper.이미지목록(board_no);
         model.addAttribute("images", 이미지들데이터);
 
@@ -93,7 +93,6 @@ public class ViewController {
      * @param model 게시물 리스트 데이터를 전달하기 위한 객체
      * @return board/product_list.jsp
      */
-
     @GetMapping("/board/list")
     public String listView(Model model) {
         List<Board> boardListData = boardService.findAllBoard();
@@ -145,8 +144,7 @@ public class ViewController {
      * 굳이 이미지 데이터가 있어야 하는 것은 아니다. ^^  <br>
      * required=false 를 쓰지 않으면 기본적으로 모든 매개변수 속성은 required=true 로 되어있다. <br>
 
-     @PostMapping("/board/write")
-     public String wrtieBoard(Board board, @RequestParam(required = false,
+     @PostMapping("/board/write") public String wrtieBoard(Board board, @RequestParam(required = false,
      value = "imageFile") MultipartFile imageFile) throws Exception {
      boardService.writeBoard(board, imageFile);
      return "redirect:/board/list";
@@ -154,17 +152,19 @@ public class ViewController {
      */
     /**
      * 게시물 작성 처리 (다중 이미지 포함)
+     *
      * @param board      form 에서 전송된 게시물 데이터(title, writer, content)
-     * @param imageFiles  &lt;input type="file" name="imageFile" multiple&gt; 로 전송된 이미지 목록 <br>
-     *                    이미지가 없어도 게시물 작성 가능하도록 required=false 작성
-     * @return            저장 완료 후 게시물 목록으로 리다이렉트
-     * @throws Exception  문제가 발생했을 경우 개발자가 회사의 방침에 따라 예외 상황에 대하여 메뉴얼 따른 대처 코드 제공
+     * @param imageFiles &lt;input type="file" name="imageFile" multiple&gt; 로 전송된 이미지 목록 <br>
+     *                   이미지가 없어도 게시물 작성 가능하도록 required=false 작성
+     * @return 저장 완료 후 게시물 목록으로 리다이렉트
+     * @throws Exception 문제가 발생했을 경우 개발자가 회사의 방침에 따라 예외 상황에 대하여 메뉴얼 따른 대처 코드 제공
      */
     @PostMapping("/board/write")
     public String wrtieBoard(Board board, @RequestParam(required = false) List<MultipartFile> imageFiles) throws Exception {
         boardService.writeBoard(board, imageFiles);
         return "redirect:/board/list";
     }
+
     /**
      * 게시물 수정 이동 (기존 데이터 조회 포함)
      *
@@ -177,6 +177,14 @@ public class ViewController {
         Board board = boardService.boardDetail(board_no);
         model.addAttribute("board", board);
         return "board/edit";
+    }
+
+    @PutMapping("/board/edit")
+    @ResponseBody
+    public Board editBoard(Board board) {
+        boardService.updateBoard(board);
+        return board;
+        //    return "redirect:/board/detail?no=" + board.getBoard_no();
     }
 
     /**
@@ -196,14 +204,5 @@ public class ViewController {
         return "redirect:/board/list";
     }
 
-        @PostMapping("/board/edit")
-    public String editBoard(Board board) {
-        boardService.updateBoard(board);
-        return "redirect:/board/detail?no=" + board.getBoard_no();
-    }
 
 }
-
-
-
-
