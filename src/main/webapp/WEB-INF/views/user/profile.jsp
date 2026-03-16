@@ -8,6 +8,8 @@
 
 <div class="container mt-5">
     <h2>내 프로필</h2>
+
+    <div id="에러창"></div>
     <!-- 프로필 사진 미리보기 -->
     <c:choose>
         <c:when test="${not empty user.profile_img}">
@@ -20,7 +22,7 @@
     </c:choose>
 
     <!-- 프로필 사진 수정하기 위한 업로드 폼-->
-    <form action="/user/profile/upload" method="post" enctype="multipart/form-data">
+    <form id="registerForm" enctype="multipart/form-data">
         <input type="file" name="imageFile" accept="image/*" onchange="미리보기기능(this)">
         <button class="btn btn-dark mt-2">저장하기</button>
     </form>
@@ -32,13 +34,13 @@
             <tr>
                 <td>이름</td>
                 <td>
-                    <input type="text" name="name" value="${user.name}" class="form-control">
+                    <input type="text" id="name" value="${user.name}" class="form-control">
                 </td>
             </tr>
             <tr>
                 <td>이메일</td>
                 <td>
-                    <input type="text" name="email" value="${user.email}" class="form-control">
+                    <input type="text" id="email" value="${user.email}" class="form-control">
                 </td>
             </tr>
             <tr>
@@ -47,7 +49,7 @@
             </tr>
         </table>
 
-        <button type="submit" class="btn btn-dark">저장하기</button>
+        <button type="button" class="btn btn-dark" id="registerBtn", onclick="회원가입기능()">저장하기</button>
     </form>
     <a href="/" class="btn btn-outline-dark">메인으로</a>
 </div>

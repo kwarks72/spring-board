@@ -54,5 +54,81 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+<script>
+    async function 회원가입기능() {
+
+        const 이름   = document.getElementById("name").value.trim();
+        const 이메일  = document.getElementById("email").value.trim();
+        const 에러창  = document.getElementById("에러창");
+        const 가입버튼 = document.getElementById("가입버튼");
+
+        if (!이름) {
+            const div = document.createElement("div");
+            div.className = "alert alert-danger";
+            div.innerText = "이름을 입력하시오";
+            에러창.innerHTML = "";
+            에러창.appendChild(div);
+            return;
+        }
+
+        if (!이메일) {
+            const div = document.createElement("div");
+            div.className = "alert alert-danger";
+            div.innerText = "이메일 없어요";
+            에러창.innerHTML = "";
+            에러창.appendChild(div);
+            return;
+        }
+
+        가입버튼.disabled = true;
+        가입버튼.textContent = "가입중";
+        에러창.innerHTML = "";
+
+        try {
+            const 응답 = await fetch("/user/register", {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: 이름, email:이메일 })
+            });
+
+            if (!응답.ok) throw new Error(`서버 오류: ${응답.status}`);
+
+            const 결과 = await 응답.json();
+
+            if (결과.ok) {
+                window.location.href = "/user/login";
+            } else if (결과.error === "email") {
+                const div = document.createElement("div");
+                div.className = "alert alert-danger";
+                div.innerText = "이미 사용중";
+                에러창.innerHTML = "";
+                에러창.appendChild(div);
+            } else {
+                const div = document.createElement("div");
+                div.className = "alert alert-danger";
+                div.innerText = "회원가입실패";
+                에러창.innerHTML = "";
+                에러창.appendChild(div);
+            }
+
+        } catch (err) {
+            const div = document.createElement("div");
+            div.className = "alert alert-danger";
+            div.innerText = "서버통신에류";
+            에러창.innerHTML = "";
+            에러창.appendChild(div);
+
+        } finally {
+            가입버튼.disabled = false;
+            가입버튼.textContent = "가입성공";
+        }
+    }
+
+
+
+
+
+
+</script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 package com.board.springboard.controller;
 
 import com.board.springboard.model.dto.Board;

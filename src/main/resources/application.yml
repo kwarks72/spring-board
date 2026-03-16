@@ -15,6 +15,7 @@ spring:
     username: ${db.username}
     password: ${db.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   servlet:
     encoding:
       charset: utf-8
@@ -23,7 +24,16 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
-
+  mail:
+    host: smtp.gmail.com
+    username: ${mail.username}
+    password: ${mail.password}
+    properties:
+      mail:
+        SMTP:
+          auth: true
+          STARTTLS:
+            enable: true
 
 mybatis:
   mapper-locations: classpath:mappers/**/*.xml
@@ -32,3 +42,8 @@ file:
   upload:
     path: ${upload.profile-path}
     board-path: ${upload.board-path}
+
+jwt:
+  secret: ${jwt.config.secret}
+  access-expiry: 1800000
+  refresh-expiry: 120960000
