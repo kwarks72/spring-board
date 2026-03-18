@@ -23,59 +23,31 @@
         <%-- Login은 회사에서 요구하는 로직에 따라
              Post 도 가능하고 Get 가능
          --%>
-        <form id="loginForm">
-            <div class="mb-3">
-                <label class="form-label">이메일</label>
-                <input type="email" name="email" id="email"
-                       class="form-control"
-                       placeholder="이메일을 입력하세요" required>
-            </div>
+
+        <input type="email" id="email">
+        <input type="password" id="password">
+        <button onclick="로그인()">로그인</button>
 
             <div id="에러창"></div>
 
-            <div class="d-grid mt-4">
-                <button type="button" id="loginBtn" onclick="로그인기능()" class="btn btn-dark">로그인</button>
-            </div>
-        </form>
-
         <script>
-            async function 로그인기능() {
-                const 이메일   = document.getElementById("email").value;
-                const 에러창   = document.getElementById("에러창");
-                const 로그인버튼 = document.getElementById("loginBtn");
+            async function 로그인() {
+                const email    = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value.trim();
 
-                if (이메일.trim() === "") {
-                    에러창.innerHTML = `<div class="alert alert-danger mt-2">이메일을 입력해주세요.</div>`;
-                    return;
-                }
+                const res = await fetch("user/login", {
+                    method: "post",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({email,password })  // ← JSON 으로 변환해서 전송
+                });
 
-                로그인버튼.disabled    = true;
-                로그인버튼.textContent = "로그인 중...";
+                const data = await res.json();
 
-                try {
-                    const 응답 = await fetch("/user/login", {
-                        method:  "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body:    JSON.stringify({ email: 이메일 })
-                    });
-
-                    if (!응답.ok) throw new Error(`서버 오류: ${응답.status}`);
-
-                    const 결과 = await 응답.json();
-
-                    if (결과.success) {
-                        window.location.href = 결과.redirectUrl || "/";
-                    } else {
-                        에러창.innerHTML = `<div class="alert alert-danger mt-2">이메일 또는 정보가 올바르지 않습니다.</div>`;
-                    }
-
-                } catch (err) {
-                    console.error("로그인 실패:", err);
-                    에러창.innerHTML = `<div class="alert alert-danger mt-2">로그인 중 오류가 발생했습니다. 다시 시도해주세요.</div>`;
-
-                } finally {
-                    로그인버튼.disabled    = false;
-                    로그인버튼.textContent = "로그인";
+                if (res.ok) {
+                    window.location.href = "/"
+                } else {
+                    alert("이메일 또는 비밀번호가 틀렸습니다");
                 }
             }
+
         </script>

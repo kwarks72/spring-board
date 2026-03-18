@@ -1,4 +1,3 @@
-
 package com.board.springboard.model.mapper;
 
 
@@ -30,28 +29,34 @@ public interface UserMapper {
      */
     int 이메일중복체크(String email);
 
-    // 조건 : 매개변수 = String email / 반환타입 = User
     // 매개변수는 () 내부에서 사용하는 명칭    (자료형 매개변수이름)
     // 반환타입은 기능명칭 앞과 접근제어자 뒤에 오는 타입
     // String,int,Long, boolean 등 다양한 자료형 작성가능하며 개발자가 만들어놓은
     // class 타입의 자료형 또한 반환타입에 들어갈 수 있다.
     // 외부 class 에서 기능을 사용만 하고, 기능에 대한 결과를 반환할 필요가 없을 경우
     // void(=return할 데이터 존재하지 않음)로 표기 가능
-    User  로그인(String email);
 
+    /**
+     *
+     * @param email -> 비밀번호는 Service 에서 BCrypt 검증
+     * @return
+     */
+    User  로그인( String email );
+
+    /**
+     *
+     * @param email
+     * @return
+     */
     User 이메일로유저찾기(String email);
 
     /**
      * 프로필 사진 경로 업데이트
-     * 파일 업로드 후 저장된 경로(String)를 DB의 PROFILE_IMG칼럼에 저장
-     * @param user id+profile img값이 담긴 User 객체를 sql에 전달
+     * 파일 업로드 후 저장된 경로(String)를 DB의 profile_img 컬럼에 저장
+     * @param user id + profile_img 값이 담긴 User 객체를 SQL로 전달
      */
     void 프로필사진수정(User user);
-
-
     User 유저단건조회(int id);
-
-
-    // TODO 2: 반환타입과 매개변수를 채우세요
     void 유저정보수정(User user);
+
 }
