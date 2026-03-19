@@ -1,4 +1,6 @@
 package com.board.springboard.common;
+
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -31,6 +33,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil; //토큰 검증은 util 맡긴다.
+    private final CookieUtil cookieUtil;
 
     /**
      * protected     void       doFilterInternal
@@ -48,7 +51,11 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest 요청,
                                     HttpServletResponse 응답,
                                     FilterChain 다음필터) throws ServletException, IOException {
-        String token = 쿠키에서토큰꺼내기(요청); // 쿠키에서 access_token 꺼내기 없으면 null 반환
+        //String token = 쿠키에서토큰꺼내기(요청);
+        //쿠키에서 access_token 꺼내기 없으면 null 반환
+
+        String token=cookieUtil.가져오기(요청, "access-token");
+
 
         // 토큰이 있고 유효하면 -> 스프링 보안팀(=시큐리티)에 로그인 상태 등록
         // 토큰이 존재하고     만료/변조된 토큰이 아니면
